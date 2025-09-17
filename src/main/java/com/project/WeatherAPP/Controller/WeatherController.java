@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/weather")
+@CrossOrigin
 public class WeatherController {
     @Autowired
     private WeatherService weatherservice;
@@ -21,7 +22,7 @@ public class WeatherController {
         return weatherservice.getdata(city);
     }
     @GetMapping("/forecast")
-    public ForeCastInfo getforecast(@RequestParam String city , @RequestParam String days ){
+    public ForeCastInfo getforecast(@RequestParam String city , @RequestParam int days ){
         return weatherservice.getforecast(city,days);
     }
 

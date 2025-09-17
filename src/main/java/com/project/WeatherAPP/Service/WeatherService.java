@@ -36,32 +36,35 @@ public class WeatherService {
         return info;
 
     }
-    public ForeCastInfo getforecast(String city , String days ){
+    public ForeCastInfo getforecast(String city , int days ){
         ForeCastInfo foreCastInfo = new ForeCastInfo();
 
         foreCastInfo.setWeather(getdata(city));
 
-        String url = forecasturl+"?key="+key+"&q="+city+"&q="+days;
+        String url = forecasturl+"?key="+key+"&q="+city+"&days="+days;
 
         Root response = template.getForObject(url,Root.class);
 
 
-        ArrayList<DayTemp>  dayTemps = new ArrayList<>();
+        ArrayList<ForeCastday> list = response.getForecast().getForecastday();
+
+       ArrayList<DayTemp> dayTemps = new ArrayList<>();
 
 
-
-        for(ForeCastday foreCastday : response.getForecast().getForecastday()){
-
+        for(ForeCastday foreCastday: list){
             DayTemp day = new DayTemp();
             day.setDate(foreCastday.getDate());
-            day.setMax_temp(foreCastday.day.getMaxtemp_c());
-            day.setMin_temp(foreCastday.day.getMintemp_c());
+            day.setMax_temp(foreCastday.getDay().getMaxtemp_c());
+            day.setMin_temp(foreCastday.getDay().getMintemp_c());
             dayTemps.add(day);
 
-        }
-        foreCastInfo.setDayTemps(dayTemps);
 
+        }
+        foreCastInfo.setDayTemps(dayTemps);;
         return foreCastInfo;
+
+
+
 
 
 

@@ -11,6 +11,7 @@ public class Root {
         this.forecast = forecast;
     }
 
+
     public ForeCast getForecast() {
         return forecast;
     }
